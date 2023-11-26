@@ -1,0 +1,3 @@
+/home/ignat/call-center/build/CMakeFiles/call_centre.dir
+/home/ignat/call-center/build/CMakeFiles/edit_cache.dir
+/home/ignat/call-center/build/CMakeFiles/rebuild_cache.dir
