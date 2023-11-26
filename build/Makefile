@@ -117,48 +117,48 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named call_centre
+# Target rules for targets named call_center
 
 # Build rule for target.
-call_centre: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 call_centre
-.PHONY : call_centre
+call_center: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 call_center
+.PHONY : call_center
 
 # fast build rule for target.
-call_centre/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/build
-.PHONY : call_centre/fast
+call_center/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/build
+.PHONY : call_center/fast
 
-call_centre.o: call_centre.cpp.o
-.PHONY : call_centre.o
+call_center.o: call_center.cpp.o
+.PHONY : call_center.o
 
 # target to build an object file
-call_centre.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/call_centre.cpp.o
-.PHONY : call_centre.cpp.o
+call_center.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/call_center.cpp.o
+.PHONY : call_center.cpp.o
 
-call_centre.i: call_centre.cpp.i
-.PHONY : call_centre.i
+call_center.i: call_center.cpp.i
+.PHONY : call_center.i
 
 # target to preprocess a source file
-call_centre.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/call_centre.cpp.i
-.PHONY : call_centre.cpp.i
+call_center.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/call_center.cpp.i
+.PHONY : call_center.cpp.i
 
-call_centre.s: call_centre.cpp.s
-.PHONY : call_centre.s
+call_center.s: call_center.cpp.s
+.PHONY : call_center.s
 
 # target to generate assembly for a file
-call_centre.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/call_centre.cpp.s
-.PHONY : call_centre.cpp.s
+call_center.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/call_center.cpp.s
+.PHONY : call_center.cpp.s
 
 configure.o: configure.cpp.o
 .PHONY : configure.o
 
 # target to build an object file
 configure.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/configure.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/configure.cpp.o
 .PHONY : configure.cpp.o
 
 configure.i: configure.cpp.i
@@ -166,7 +166,7 @@ configure.i: configure.cpp.i
 
 # target to preprocess a source file
 configure.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/configure.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/configure.cpp.i
 .PHONY : configure.cpp.i
 
 configure.s: configure.cpp.s
@@ -174,7 +174,7 @@ configure.s: configure.cpp.s
 
 # target to generate assembly for a file
 configure.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/configure.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/configure.cpp.s
 .PHONY : configure.cpp.s
 
 current_calls.o: current_calls.cpp.o
@@ -182,7 +182,7 @@ current_calls.o: current_calls.cpp.o
 
 # target to build an object file
 current_calls.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/current_calls.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/current_calls.cpp.o
 .PHONY : current_calls.cpp.o
 
 current_calls.i: current_calls.cpp.i
@@ -190,7 +190,7 @@ current_calls.i: current_calls.cpp.i
 
 # target to preprocess a source file
 current_calls.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/current_calls.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/current_calls.cpp.i
 .PHONY : current_calls.cpp.i
 
 current_calls.s: current_calls.cpp.s
@@ -198,7 +198,7 @@ current_calls.s: current_calls.cpp.s
 
 # target to generate assembly for a file
 current_calls.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/current_calls.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/current_calls.cpp.s
 .PHONY : current_calls.cpp.s
 
 listener.o: listener.cpp.o
@@ -206,7 +206,7 @@ listener.o: listener.cpp.o
 
 # target to build an object file
 listener.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/listener.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/listener.cpp.o
 .PHONY : listener.cpp.o
 
 listener.i: listener.cpp.i
@@ -214,7 +214,7 @@ listener.i: listener.cpp.i
 
 # target to preprocess a source file
 listener.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/listener.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/listener.cpp.i
 .PHONY : listener.cpp.i
 
 listener.s: listener.cpp.s
@@ -222,7 +222,7 @@ listener.s: listener.cpp.s
 
 # target to generate assembly for a file
 listener.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/listener.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/listener.cpp.s
 .PHONY : listener.cpp.s
 
 main.o: main.cpp.o
@@ -230,7 +230,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -238,7 +238,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -246,7 +246,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 notify_interface.o: notify_interface.cpp.o
@@ -254,7 +254,7 @@ notify_interface.o: notify_interface.cpp.o
 
 # target to build an object file
 notify_interface.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/notify_interface.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/notify_interface.cpp.o
 .PHONY : notify_interface.cpp.o
 
 notify_interface.i: notify_interface.cpp.i
@@ -262,7 +262,7 @@ notify_interface.i: notify_interface.cpp.i
 
 # target to preprocess a source file
 notify_interface.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/notify_interface.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/notify_interface.cpp.i
 .PHONY : notify_interface.cpp.i
 
 notify_interface.s: notify_interface.cpp.s
@@ -270,7 +270,7 @@ notify_interface.s: notify_interface.cpp.s
 
 # target to generate assembly for a file
 notify_interface.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/notify_interface.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/notify_interface.cpp.s
 .PHONY : notify_interface.cpp.s
 
 session.o: session.cpp.o
@@ -278,7 +278,7 @@ session.o: session.cpp.o
 
 # target to build an object file
 session.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/session.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/session.cpp.o
 .PHONY : session.cpp.o
 
 session.i: session.cpp.i
@@ -286,7 +286,7 @@ session.i: session.cpp.i
 
 # target to preprocess a source file
 session.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/session.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/session.cpp.i
 .PHONY : session.cpp.i
 
 session.s: session.cpp.s
@@ -294,7 +294,7 @@ session.s: session.cpp.s
 
 # target to generate assembly for a file
 session.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_centre.dir/build.make CMakeFiles/call_centre.dir/session.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/call_center.dir/build.make CMakeFiles/call_center.dir/session.cpp.s
 .PHONY : session.cpp.s
 
 # Help Target
@@ -305,10 +305,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... call_centre"
-	@echo "... call_centre.o"
-	@echo "... call_centre.i"
-	@echo "... call_centre.s"
+	@echo "... call_center"
+	@echo "... call_center.o"
+	@echo "... call_center.i"
+	@echo "... call_center.s"
 	@echo "... configure.o"
 	@echo "... configure.i"
 	@echo "... configure.s"

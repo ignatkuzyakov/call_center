@@ -7,6 +7,7 @@
 
 #include <string>
 #include <memory>
+#include <chrono>
 
 #include "current_calls.hpp"
 
@@ -26,6 +27,8 @@ class session : public std::enable_shared_from_this<session>
     std::string CallID;
     std::string CDR;
 
+    std::chrono::system_clock::time_point start, end;
+
 public:
     // Take ownership of the stream
     session(
@@ -41,8 +44,6 @@ public:
     void on_read(
         beast::error_code ec,
         std::size_t bytes_transferred);
-
-    std::string make_call_id(boost::beast::string_view number);
 
     void send_response();
 

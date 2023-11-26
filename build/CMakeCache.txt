@@ -155,7 +155,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=call_centre
+CMAKE_PROJECT_NAME:STATIC=call_center
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -232,13 +232,13 @@ boost_system_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/boost_system-1.74.0
 boost_thread_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/boost_thread-1.74.0
 
 //Value Computed by CMake
-call_centre_BINARY_DIR:STATIC=/home/ignat/call-center/build
+call_center_BINARY_DIR:STATIC=/home/ignat/call-center/build
 
 //Value Computed by CMake
-call_centre_IS_TOP_LEVEL:STATIC=ON
+call_center_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-call_centre_SOURCE_DIR:STATIC=/home/ignat/call-center
+call_center_SOURCE_DIR:STATIC=/home/ignat/call-center
 
 
 ########################

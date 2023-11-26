@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <random>
+#include <chrono>
 
 #include "session.hpp"
 #include "current_calls.hpp"
@@ -26,7 +27,18 @@ session::session(
 }
 
 session::~session()
-{
+{   
+    end = std::chrono::system_clock::now();
+
+    std::time_t start_t = std::chrono::system_clock::to_time_t(start);
+    std::time_t end_t = std::chrono::system_clock::to_time_t(end);
+
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::ctime(&start_t);
+    std::ctime(&end_t);
+
+    elapsed_seconds.count();
+
 }
 
 // Start the asynchronous operation
@@ -48,9 +60,9 @@ void session::run()
                       std::shared_ptr<session> strong(weak);
                       if (strong)
                       {
-                        strong->stream_.expires_after(std::chrono::seconds((std::size_t)dist(reng)));
-                        
-                        strong->do_read();
+                          strong->stream_.expires_after(std::chrono::seconds((std::size_t)dist(reng)));
+                          strong->start = std::chrono::system_clock::now();
+                          strong->do_read();
                       }
                   });
 }
