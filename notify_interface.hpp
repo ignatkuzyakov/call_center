@@ -1,5 +1,5 @@
-#ifndef NOTIFY_INTERFACE
-#define NOTIFY_INTERFACE
+#ifndef NOTIFY_INTERFACE_HPP
+#define NOTIFY_INTERFACE_HPP
 
 #include <thread>
 #include <condition_variable>

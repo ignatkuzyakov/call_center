@@ -1,18 +1,3 @@
-//
-// Copyright (c) 2016-2019 Vinnie Falco (vinnie dot falco at gmail dot com)
-//
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-//
-// Official repository: https://github.com/boostorg/beast
-//
-
-//------------------------------------------------------------------------------
-//
-// Example: HTTP client, asynchronous
-//
-//------------------------------------------------------------------------------
-
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
@@ -23,16 +8,15 @@
 #include <memory>
 #include <string>
 
-namespace beast = boost::beast;         // from <boost/beast.hpp>
-namespace http = beast::http;           // from <boost/beast/http.hpp>
-namespace net = boost::asio;            // from <boost/asio.hpp>
-using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
+namespace beast = boost::beast;   // from <boost/beast.hpp>
+namespace http = beast::http;     // from <boost/beast/http.hpp>
+namespace net = boost::asio;      // from <boost/asio.hpp>
+using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
 
 //------------------------------------------------------------------------------
 
 // Report a failure
-void
-fail(beast::error_code ec, char const* what)
+void fail(beast::error_code ec, char const *what)
 {
     std::cerr << what << ": " << ec.message() << "\n";
 }
@@ -49,19 +33,17 @@ class session : public std::enable_shared_from_this<session>
 public:
     // Objects are constructed with a strand to
     // ensure that handlers do not execute concurrently.
-    explicit
-    session(net::io_context& ioc)
-        : resolver_(net::make_strand(ioc))
-        , stream_(net::make_strand(ioc))
+    explicit session(net::io_context &ioc)
+        : resolver_(net::make_strand(ioc)), stream_(net::make_strand(ioc))
     {
     }
 
     // Start the asynchronous operation
     void
     run(
-        char const* host,
-        char const* port,
-        char const* target,
+        char const *host,
+        char const *port,
+        char const *target,
         int version)
     {
         // Set up an HTTP GET request message
@@ -85,11 +67,8 @@ public:
         beast::error_code ec,
         tcp::resolver::results_type results)
     {
-        if(ec)
+        if (ec)
             return fail(ec, "resolve");
-
-        // Set a timeout on the operation
-  
 
         // Make the connection on the IP address we get from a lookup
         stream_.async_connect(
@@ -102,17 +81,14 @@ public:
     void
     on_connect(beast::error_code ec, tcp::resolver::results_type::endpoint_type)
     {
-        if(ec)
+        if (ec)
             return fail(ec, "connect");
-
-        // Set a timeout on the operation
-       
 
         // Send the HTTP request to the remote host
         http::async_write(stream_, req_,
-            beast::bind_front_handler(
-                &session::on_write,
-                shared_from_this()));
+                          beast::bind_front_handler(
+                              &session::on_write,
+                              shared_from_this()));
     }
 
     void
@@ -122,14 +98,14 @@ public:
     {
         boost::ignore_unused(bytes_transferred);
 
-        if(ec)
+        if (ec)
             return fail(ec, "write");
-        
+
         // Receive the HTTP response
         http::async_read(stream_, buffer_, res_,
-            beast::bind_front_handler(
-                &session::on_read,
-                shared_from_this()));
+                         beast::bind_front_handler(
+                             &session::on_read,
+                             shared_from_this()));
     }
 
     void
@@ -139,19 +115,19 @@ public:
     {
         boost::ignore_unused(bytes_transferred);
 
-        if(ec)
+        if (ec)
             return fail(ec, "read");
 
         // Write the message to standard out
         std::cout << res_ << std::endl;
+        res_.body()={};
+        buffer_.clear();
+        http::async_read(stream_, buffer_, res_,
+                         beast::bind_front_handler(
+                             &session::on_read,
+                             shared_from_this()));
 
-         http::async_read(stream_, buffer_, res_,
-            beast::bind_front_handler(
-                &session::on_read,
-                shared_from_this()));
-        
         // Gracefully close the socket
-        
 
         // If we get here then the connection is closed gracefully
     }
@@ -159,9 +135,9 @@ public:
 
 //------------------------------------------------------------------------------
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-  
+
     auto const host = "0.0.0.0";
     auto const port = "81";
     auto const target = "81221";
