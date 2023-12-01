@@ -70,7 +70,10 @@ void ts_queue<T>::wait_and_pop(std::shared_ptr<current_calls> state_)
 
     sptr->set_OperatorID(opid);
     sptr->send("We are talking");
-
+    sptr->get_DT_start_answer();
+    sptr->cancel_timer();
+    sptr->start_timer();
+    sptr->check_deadline();
 
     Q.pop_front();
 }

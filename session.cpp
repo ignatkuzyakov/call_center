@@ -12,6 +12,7 @@
 #include <random>
 #include <thread>
 #include <chrono>
+#include <sstream>
 
 #include "session.hpp"
 #include "current_calls.hpp"
@@ -31,7 +32,7 @@ session::session(
     std::shared_ptr<ts_queue<std::shared_ptr<session>>> qptr)
     : stream_(std::move(socket)),
       state_(state),
-      CDR(DTincoming),
+      DTIncoming(DTincoming),
       timer(stream_.get_executor()),
       q_ptr(qptr)
 
@@ -47,30 +48,18 @@ session::~session()
     BOOST_LOG_SEV(my_logger::get(), info) << "session:: Destructor";
     BOOST_LOG_SEV(my_logger::get(), info) << "session:: Write CDR";
 
-    CDR += CallID;
-    CDR += Number;
-    CDR += ';';
-    CDR += to_simple_string(end);
-    CDR += ';';
-
-    CDR += Status;
-    CDR += ';';
-
     if (Status == "overload" || Status == "timeout")
     {
-        CDR += ";;;";
-        std::cout << CDR << std::endl;
+         BOOST_LOG_SEV(my_logger::get(), CDR) <<  DTIncoming + ';' + CallID
+                                     + ';' + Number + ';' + to_simple_string(end) 
+                                     + ';' + Status + ";;;";
         return;
     }
-
-    CDR += to_simple_string(start);
-    CDR += ';';
-    CDR += std::to_string(OperatorID);
-    CDR += ';';
-    CDR += std::to_string(diff.total_seconds()) + 's';
-    CDR += ';';
-
-    std::cout << CDR << std::endl;
+        BOOST_LOG_SEV(my_logger::get(), CDR) <<  DTIncoming + ';' + CallID
+                                     + ';' + Number + ';' + to_simple_string(end) 
+                                     + ';' + Status + ';' + to_simple_string(start)
+                                     + ';' + std::to_string(OperatorID)
+                                     + ';' + std::to_string(diff.total_seconds()) + "s;";
 }
 
 void session::set_Status(std::string status)
@@ -103,13 +92,16 @@ void session::run()
 
                           BOOST_LOG_SEV(my_logger::get(), warn) << "session:: Queue is full";
 
-                          // fail("queue is full");
                           return;
                       }
 
-                      self->start = boost::posix_time::second_clock::local_time();
                       self->do_read();
                   });
+}
+
+void session::get_DT_start_answer(){
+
+                      start = boost::posix_time::second_clock::local_time();
 }
 
 void session::check_deadline()
@@ -124,13 +116,13 @@ void session::check_deadline()
                            
                                           BOOST_LOG_SEV(my_logger::get(), debug) << "session:: Async Wait handler";
         if(strong){
-            strong->stream_.cancel();
         if (ec) {
                                           BOOST_LOG_SEV(my_logger::get(), error) <<"session:: " << ec.message();
 
-            strong->do_close();
+            
             return;}
-       
+         
+            strong->stream_.cancel();
             if(strong->OperatorID == -1){
                       BOOST_LOG_SEV(my_logger::get(), warn) << "session:: Timeout";
 
@@ -170,23 +162,18 @@ void session::on_read(
     boost::ignore_unused(bytes_transferred);
 
     // This means they closed the connection
-    if (ec == http::error::end_of_stream)
-    {
-        BOOST_LOG_SEV(my_logger::get(), error) << "session:: Abonent closed the connection" << ec.message();
-
-        timer.cancel();
-        return do_close();
-    }
-
     if (ec)
     {
         BOOST_LOG_SEV(my_logger::get(), error) << "session:: Read: " << ec.message();
-
-        return do_close(); // fail(ec, "read");
+        if(ec == http::error::end_of_stream)
+        BOOST_LOG_SEV(my_logger::get(), error) << "session:: Abonent closed the connection" << ec.message();
+        timer.cancel();
+        do_close();
+        return;
     }
 
-    Number = res_.body();
-
+    Number = req_.target().data();
+    std::cout<< Number;
     if (q_ptr->found(Number))
     {
         BOOST_LOG_SEV(my_logger::get(), warn) << "session:: Abonent already in queue";
@@ -290,22 +277,23 @@ void session::do_close()
 
     BOOST_LOG_SEV(my_logger::get(), info) << "session:: Do close";
     stream_.cancel();
-    if (OperatorID != -1)
-    {
-        BOOST_LOG_SEV(my_logger::get(), debug) << "session:: "
-                                 << "OperatorID: " << OperatorID << " Leave call";
-        state_->leave(OperatorID);
+
+    if (OperatorID == -1){
+ BOOST_LOG_SEV(my_logger::get(), debug) << "session:: Erasing from queue"
+                                               << "CallID" << CallID;
+        q_ptr->erase(CallID);
+
     }
     else
     {
-        BOOST_LOG_SEV(my_logger::get(), debug) << "session:: Erasing from queue"
-                                 << "CallID" << CallID;
-        q_ptr->erase(CallID);
+        BOOST_LOG_SEV(my_logger::get(), debug) << "session:: "
+                                               << "OperatorID: " << OperatorID << " Leave call";
+        state_->leave(OperatorID);
     }
 
     stream_.socket().shutdown(tcp::socket::shutdown_send, ec);
     BOOST_LOG_SEV(my_logger::get(), debug) << "session:: Shutdown socket: "
-                             << "OperatorID: " << OperatorID << ' ' << ec.message();
+                                           << "OperatorID: " << OperatorID << ' ' << ec.message();
 
     // At this point the connection is closed gracefully
 }

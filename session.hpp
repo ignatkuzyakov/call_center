@@ -27,20 +27,17 @@ class session : public std::enable_shared_from_this<session>
     beast::flat_buffer buffer_;
 
     http::request<http::dynamic_body> req_;
+    http::response<http::string_body> res_;
     
     std::shared_ptr<current_calls> state_;
     std::shared_ptr<ts_queue<std::shared_ptr<session>>> q_ptr;
-
-    http::response<http::string_body> res_;
-
+    
     int OperatorID = -1;
     
     std::string CallID;
-    std::string CDR;
+    std::string DTIncoming;
     std::string Status;
     std::string Number;
-
-    bool on_context = true;
  
     boost::asio::deadline_timer timer;
     boost::posix_time::ptime start, end;
@@ -62,7 +59,7 @@ public:
 
     void start_timer();
     void cancel_timer();
-
+    void get_DT_start_answer();
     void on_read(
         beast::error_code ec,
         std::size_t bytes_transferred);

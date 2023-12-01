@@ -14,7 +14,6 @@ set(SOURCE_FILES
     call_center.hpp
     current_calls.cpp
     current_calls.hpp
-    logger.cpp
     logger.hpp
     listener.cpp
     listener.hpp
