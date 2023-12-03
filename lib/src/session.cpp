@@ -12,11 +12,11 @@
 #include <random>
 #include <string>
 
-#include "configure.hpp"
-#include "current_calls.hpp"
-#include "logger.hpp"
-#include "session.hpp"
-#include "ts_queue.hpp"
+#include "../include/configure.hpp"
+#include "../include/current_calls.hpp"
+#include "../include/logger.hpp"
+#include "../include/session.hpp"
+#include "../include/ts_queue.hpp"
 
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace http = beast::http;     // from <boost/beast/http.hpp>
@@ -113,7 +113,7 @@ void session::check_deadline() {
         BOOST_LOG_SEV(my_logger::get(), warn) << "session:: Timeout";
 
         strong->set_Status("timeout");
-        strong->q_ptr->erase(strong->get_CallID());
+        strong->q_ptr->erase(strong);
       } else {
         BOOST_LOG_SEV(my_logger::get(), info) << "session:: Status: OK";
         strong->set_Status("OK");
@@ -157,8 +157,8 @@ void session::on_read(beast::error_code ec, std::size_t bytes_transferred) {
   }
 
   Number = req_.target().data();
-  std::cout << Number;
-  if (q_ptr->found(Number)) {
+
+  if (q_ptr->found_Number(shared_from_this())) {
     BOOST_LOG_SEV(my_logger::get(), warn)
         << "session:: Abonent already in queue";
 
@@ -229,8 +229,7 @@ void session::on_write(beast::error_code ec, std::size_t bytes_transferred) {
 
   BOOST_LOG_SEV(my_logger::get(), debug) << "session:: Push to queue";
 
-  std::weak_ptr<session> weak = shared_from_this();
-  q_ptr->push(weak);
+  q_ptr->push(shared_from_this());
   start_timer();
   check_deadline();
   do_read();
@@ -246,7 +245,7 @@ void session::do_close() {
   if (OperatorID == -1) {
     BOOST_LOG_SEV(my_logger::get(), debug) << "session:: Erasing from queue"
                                            << "CallID" << CallID;
-    q_ptr->erase(CallID);
+    q_ptr->erase(shared_from_this());
 
   } else {
     BOOST_LOG_SEV(my_logger::get(), debug)

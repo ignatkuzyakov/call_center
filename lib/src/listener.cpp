@@ -83,7 +83,15 @@ void listener::run() {
 
     for (;;) {
       BOOST_LOG_SEV(my_logger::get(), debug) << "listener:: Call wait and pop";
-      q_ptr->wait_and_pop(state_);
+      std::shared_ptr<session> sptr;
+      q_ptr->wait_and_pop(sptr);
+      auto opid = state_->join(sptr);
+      sptr->send("We are talking");
+      sptr->get_DT_start_answer();
+      sptr->cancel_timer();
+      sptr->start_timer();
+      sptr->check_deadline();
+      sptr->set_OperatorID(opid);
     }
   });
   t.detach();

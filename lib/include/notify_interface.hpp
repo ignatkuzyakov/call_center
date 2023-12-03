@@ -7,7 +7,7 @@ extern struct notify_interface {
 
   mutable std::mutex Mut;
   std::condition_variable Cond;
-
+  bool done = true;
 } ni;
 
 #endif

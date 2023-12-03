@@ -2,11 +2,8 @@
 #define TS_QUEUE_HPP
 
 #include <deque>
-#include <memory>
 #include <mutex>
 
-#include "configure.hpp"
-#include "current_calls.hpp"
 #include "notify_interface.hpp"
 #include "session.hpp"
 
@@ -16,57 +13,49 @@ template <typename T> class ts_queue {
 
 public:
   ts_queue();
-  void push(std::weak_ptr<session>);
-  void wait_and_pop(std::shared_ptr<current_calls>);
+  ts_queue(notify_interface &);
+  void push(T);
+  void wait_and_pop(T &);
   std::size_t size();
 
-  void erase(std::string);
+  void erase(T);
 
-  bool found(std::string);
+  bool found_Number(T);
 };
+
+template <typename T> ts_queue<T>::ts_queue(notify_interface &n) : ni_ptr(&n) {}
 
 template <typename T> ts_queue<T>::ts_queue() : ni_ptr(&ni) {}
 
-template <typename T> void ts_queue<T>::push(std::weak_ptr<session> weak) {
+template <typename T> void ts_queue<T>::push(T Data) {
   std::unique_lock<std::mutex> Lk{ni_ptr->Mut};
-  Q.push_back(weak.lock());
+  Q.push_back(std::move(Data));
   ni_ptr->Cond.notify_one();
 }
 
-template <typename T> void ts_queue<T>::erase(std::string CallID) {
+template <typename T> void ts_queue<T>::erase(T Data) {
   std::lock_guard<std::mutex> Lk{ni_ptr->Mut};
   typename std::deque<T>::iterator sta, fin;
 
   for (sta = Q.begin(), fin = Q.end(); sta != fin; ++sta) {
-    if ((*sta)->get_CallID() == CallID) {
+    if (*sta == Data) {
       Q.erase(sta);
       return;
     }
   }
 }
 
-template <typename T>
-void ts_queue<T>::wait_and_pop(std::shared_ptr<current_calls> state_) {
+template <typename T> void ts_queue<T>::wait_and_pop(T &Data) {
   std::unique_lock<std::mutex> Lk{ni_ptr->Mut};
-  ni_ptr->Cond.wait(Lk, [&state_, this] {
-    return (state_->size() < NCalls) && (!Q.empty());
-  });
-
-  auto opid = state_->join(std::move(Q.front()));
-  auto sptr = (*state_)[opid];
-  sptr->send("We are talking");
-  sptr->get_DT_start_answer();
-  sptr->cancel_timer();
-  sptr->start_timer();
-  sptr->check_deadline();
-  sptr->set_OperatorID(opid);
+  ni_ptr->Cond.wait(Lk, [this] { return ni_ptr->done && (!Q.empty()); });
+  Data = std::move(Q.front());
   Q.pop_front();
 }
 
-template <typename T> bool ts_queue<T>::found(std::string num) {
+template <typename T> bool ts_queue<T>::found_Number(T Data) {
   std::unique_lock<std::mutex> Lk{ni_ptr->Mut};
   for (auto x : Q) {
-    if (x->get_Number() == num)
+    if (x->get_Number() == Data->get_Number())
       return true;
   }
   return false;
