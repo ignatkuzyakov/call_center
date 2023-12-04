@@ -4,18 +4,15 @@
 #include <boost/beast/version.hpp>
 #include <boost/config.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/log/sources/global_logger_storage.hpp>
-#include <boost/log/sources/severity_logger.hpp>
 
 #include <memory>
 #include <thread>
 
 #include "../include/current_calls.hpp"
 #include "../include/listener.hpp"
+#include "../include/logger.hpp"
 #include "../include/session.hpp"
 #include "../include/ts_queue.hpp"
-
-#include "../include/logger.hpp"
 
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace net = boost::asio;      // from <boost/asio.hpp>

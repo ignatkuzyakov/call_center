@@ -7,7 +7,6 @@
 #include <boost/lexical_cast.hpp>
 
 #include <cstddef>
-#include <iostream>
 #include <memory>
 #include <random>
 #include <string>
