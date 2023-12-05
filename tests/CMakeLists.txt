@@ -1,4 +1,7 @@
 add_definitions(-DBOOST_LOG_DYN_LINK)
+add_definitions(-DBOOST_ALLOW_DEPRECATED_HEADERS)
+add_definitions(-DBOOST_BIND_GLOBAL_PLACEHOLDERS)
+
 include_directories(${call_center_SOURCE_DIR}/lib/include)
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${call_center_SOURCE_DIR}/lib/src)
