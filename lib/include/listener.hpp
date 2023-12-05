@@ -5,9 +5,11 @@
 #include <boost/beast/version.hpp>
 #include <boost/config.hpp>
 
+#include <boost/log/sources/severity_logger.hpp>
 #include <memory>
 
 #include "current_calls.hpp"
+#include "logger.hpp"
 #include "session.hpp"
 #include "ts_queue.hpp"
 
@@ -24,6 +26,9 @@ class listener : public std::enable_shared_from_this<listener> {
 
   std::shared_ptr<ts_queue<std::shared_ptr<session>>> q_ptr;
   std::shared_ptr<current_calls_d> state_;
+
+  boost::log::sources::severity_logger_mt<severity_level> &lg =
+      my_logger::get();
 
 public:
   listener(net::io_context &ioc, tcp::endpoint endpoint,
