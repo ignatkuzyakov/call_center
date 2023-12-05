@@ -7,11 +7,12 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_io.hpp>
 
+#include <boost/log/sources/severity_logger.hpp>
 #include <memory>
 #include <string>
 
 #include "current_calls.hpp"
-#include "ts_queue.hpp"
+#include "logger.hpp"
 
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace http = beast::http;     // from <boost/beast/http.hpp>
@@ -41,6 +42,9 @@ class session : public std::enable_shared_from_this<session> {
 
   boost::asio::deadline_timer timer;
   boost::posix_time::ptime start, end;
+
+  boost::log::sources::severity_logger_mt<severity_level> &lg =
+      my_logger::get();
 
 public:
   // Take ownership of the stream
