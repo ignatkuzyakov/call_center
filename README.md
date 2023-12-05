@@ -80,6 +80,17 @@ sudo ./build/main/src/callCenter ./configure.json 0.0.0.0 81
 ```
 ./build/main/src/abonent 0.0.0.0 81 897362723
 ```
+Run functional tests (which generates within -DTESTING=ON) temporarily for debug version
+
+default host: 0.0.0.0, port: 81, it can be changed for your system in ./tests/tests_functional.cpp
+```
+sudo ./debug/tests/tests_functional
+```
+now you can manualy (TODO: automate log/journal analysis):
+```
+tail journal.txt
+tail log.txt
+```
 ## How it works ##
 
 When a call comes in (HTTP REQ), first we validate the phone number. We check if the number is already in the queue. If it is not, we send a message saying "already in the queue" and close connection with Status = overload. Otherwise, the call is added to the queue and send CallID.
