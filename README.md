@@ -101,7 +101,7 @@ We have a timer for the time spent in the queue. If the timer expires, we simply
 
 The call center itself is implemented using an asynchronous server and utilizes the Boost library.
 
-## Call Detail Record (CDR): ##
+## Call Detail Record (CDR) ##
 
 1. Call arrival timestamp
 2. Incoming call identifie
@@ -111,3 +111,9 @@ The call center itself is implemented using an asynchronous server and utilizes 
 6. Operator response timestamp (if applicable, or empty value)
 7. Operator identifier (empty value if the connection was not established)
 8. Call duration (empty value if the connection was not established)
+
+## What could be improved ##
+* add encapsulation for notify interface
+* change sync write method by future
+* add automate log/journal analysis
+* fix boost::log linking issue with FetchContent
