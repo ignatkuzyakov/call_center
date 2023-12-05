@@ -21,8 +21,10 @@ namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace http = beast::http;     // from <boost/beast/http.hpp>
 namespace net = boost::asio;      // from <boost/asio.hpp>
 using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
+//
+using current_calls_d = current_calls<std::shared_ptr<session>>;
 
-session::session(tcp::socket &&socket, std::shared_ptr<current_calls> state,
+session::session(tcp::socket &&socket, std::shared_ptr<current_calls_d> state,
                  std::string DTincoming,
                  std::shared_ptr<ts_queue<std::shared_ptr<session>>> qptr)
     : stream_(std::move(socket)), state_(state), DTIncoming(DTincoming),
@@ -165,7 +167,7 @@ void session::on_read(beast::error_code ec, std::size_t bytes_transferred) {
     return;
   }
 
-  std::string response("You are in queue\nCallID: ");
+  std::string response("in queue\nCallID: ");
   response += CallID;
   // Send the response
   send_response(response);

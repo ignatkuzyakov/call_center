@@ -13,12 +13,14 @@ set(FETCHCONTENT_QUIET FALSE)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-FetchContent_Declare(
-        googletest
-        GIT_REPOSITORY https://github.com/google/googletest
-        GIT_TAG 76bb2afb8b522d24496ad1c757a49784fbfa2e42
+if(TESTING)
+    FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest
+            GIT_TAG 76bb2afb8b522d24496ad1c757a49784fbfa2e42
 )
-FetchContent_MakeAvailable(googletest)
+    FetchContent_MakeAvailable(googletest)
+endif()
 
 find_package(Boost COMPONENTS log system thread REQUIRED)
 
@@ -41,4 +43,7 @@ endif()
 
 add_subdirectory(main) 
 add_subdirectory(lib)
-add_subdirectory(tests)
+
+if(TESTING)
+    add_subdirectory(tests)
+endif()

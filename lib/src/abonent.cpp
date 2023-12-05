@@ -71,7 +71,7 @@ void ASession::on_read(beast::error_code ec, std::size_t bytes_transferred) {
   boost::ignore_unused(bytes_transferred);
 
   if (ec)
-    return fail(ec, "read");
+    return;
 
   // Write the message to standard out
   std::cout << res_.body().c_str() << std::endl;

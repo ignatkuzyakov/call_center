@@ -14,12 +14,14 @@
 #include "../include/session.hpp"
 #include "../include/ts_queue.hpp"
 
+using current_calls_d = current_calls<std::shared_ptr<session>>;
+
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace net = boost::asio;      // from <boost/asio.hpp>
 using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
 
 listener::listener(net::io_context &ioc, tcp::endpoint endpoint,
-                   std::shared_ptr<current_calls> state,
+                   std::shared_ptr<current_calls_d> state,
                    std::shared_ptr<ts_queue<std::shared_ptr<session>>> qptr)
     : ioc_(ioc), acceptor_(net::make_strand(ioc)), state_(state), q_ptr(qptr) {
   BOOST_LOG_SEV(my_logger::get(), debug) << "listener:: Constructing...";

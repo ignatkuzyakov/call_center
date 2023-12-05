@@ -1,4 +1,6 @@
+Testing/
 build/
+debug/
 .vscode/
 **/CMakeFiles/
 *.txt

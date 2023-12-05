@@ -15,6 +15,8 @@ using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
 
 class session;
 
+using current_calls_d = current_calls<std::shared_ptr<session>>;
+
 call_center::call_center(const std::string address, unsigned short const port,
                          int const threads)
     : address_(net::ip::make_address(address)), port_(port), threads_(threads),
@@ -23,7 +25,7 @@ call_center::call_center(const std::string address, unsigned short const port,
 int call_center::start() {
   boost::asio::io_service::work work(ioc_);
   std::make_shared<listener>(
-      ioc_, tcp::endpoint{address_, port_}, std::make_shared<current_calls>(),
+      ioc_, tcp::endpoint{address_, port_}, std::make_shared<current_calls_d>(),
       std::make_shared<ts_queue<std::shared_ptr<session>>>())
       ->run();
 

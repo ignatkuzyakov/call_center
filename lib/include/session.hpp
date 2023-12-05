@@ -15,11 +15,12 @@
 
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace http = beast::http;     // from <boost/beast/http.hpp>
-using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
+using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp
 
-class current_calls;
-template <typename T>
-class ts_queue;
+class session;
+using current_calls_d = current_calls<std::shared_ptr<session>>;
+
+template <typename T> class ts_queue;
 
 class session : public std::enable_shared_from_this<session> {
   beast::tcp_stream stream_;
@@ -28,7 +29,7 @@ class session : public std::enable_shared_from_this<session> {
   http::request<http::dynamic_body> req_;
   http::response<http::string_body> res_;
 
-  std::shared_ptr<current_calls> state_;
+  std::shared_ptr<current_calls_d> state_;
   std::shared_ptr<ts_queue<std::shared_ptr<session>>> q_ptr;
 
   int OperatorID = -1;
@@ -43,7 +44,7 @@ class session : public std::enable_shared_from_this<session> {
 
 public:
   // Take ownership of the stream
-  session(tcp::socket &&, std::shared_ptr<current_calls>, std::string,
+  session(tcp::socket &&, std::shared_ptr<current_calls_d>, std::string,
           std::shared_ptr<ts_queue<std::shared_ptr<session>>>);
 
   ~session();
