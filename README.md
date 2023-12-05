@@ -61,7 +61,7 @@ cmake --build debug
 ```
 ctest --test-dir ./debug/tests/ && ctest --test-dir ./build/tests/
 ```
-## Or just run ##
+## Or just ##
 ```
 ./debug/tests/tests && ./build/tests/tests
 ```
@@ -74,7 +74,6 @@ sudo ./build/main/src/callCenter
 ./build/main/src/abonent
 ```
 You can explicitly specify host, port, confi.json or number(for abonent)
-for example
 ```
 sudo ./build/main/src/callCenter ./configure.json 0.0.0.0 81
 ```
