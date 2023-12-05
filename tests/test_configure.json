@@ -1,0 +1,12 @@
+{
+    "Settings": {
+        "CallsTimeRange": [
+            {
+                "Rmin": 1,
+                "Rmax": 4
+            }
+        ],
+        "NQueue": 200,
+        "NCalls": 100
+    }
+}
