@@ -50,7 +50,7 @@ cmake --build build
 ## Debug build (for example with tests) ##
 
 ```
-cmake -G Ninja -B debug -DTESTING=ON -DCMAKE_CXX_COMPILER=g++-12 -DCMAKE_BUILD_TYPE=Debug .
+cmake -G "Unix Makefiles" -B debug -DTESTING=ON -DCMAKE_CXX_COMPILER=g++-12 -DCMAKE_BUILD_TYPE=Debug .
 ```
 ```
 cmake --build debug
@@ -61,9 +61,24 @@ cmake --build debug
 ```
 ctest --test-dir ./debug/tests/ && ctest --test-dir ./build/tests/
 ```
-## Or just run ##
+## Or just ##
 ```
 ./debug/tests/tests && ./build/tests/tests
+```
+## Run ##
+From the source directory
+```
+sudo ./build/main/src/callCenter
+```
+```
+./build/main/src/abonent
+```
+You can explicitly specify host, port, confi.json or number(for abonent)
+```
+sudo ./build/main/src/callCenter ./configure.json 0.0.0.0 81
+```
+```
+./build/main/src/abonent 0.0.0.0 81 897362723
 ```
 ## How it works ##
 
