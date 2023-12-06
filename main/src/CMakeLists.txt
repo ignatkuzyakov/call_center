@@ -1,4 +1,7 @@
 add_definitions(-DBOOST_LOG_DYN_LINK)
+add_definitions(-DBOOST_ALLOW_DEPRECATED_HEADERS)
+add_definitions(-DBOOST_BIND_GLOBAL_PLACEHOLDERS)
+
 include_directories(${Boost_INCLUDE_DIR})
 include_directories(${MyProject_SOURCE_DIR}/lib/include)
 link_directories(${MyProject_SOURCE_DIR}/lib/src)
