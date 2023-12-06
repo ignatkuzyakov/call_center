@@ -38,7 +38,7 @@ sudo apt-get install libboost-all-dev g++-12 cmake
 
 ### Source for this issue: https://www.boost.org/doc/libs/develop/libs/log/doc/html/log/installation/config.html
 
-## Release build (for example without tests) ##
+## Release build (e.g. without tests) ##
 
 ```
 cmake -G "Unix Makefiles" -B build -DTESTING=OFF -DCMAKE_CXX_COMPILER=g++-12 -DCMAKE_BUILD_TYPE=Release .
@@ -47,7 +47,7 @@ cmake -G "Unix Makefiles" -B build -DTESTING=OFF -DCMAKE_CXX_COMPILER=g++-12 -DC
 cmake --build build
 ```
 
-## Debug build (for example with tests) ##
+## Debug build (e.g. with tests) ##
 
 ```
 cmake -G "Unix Makefiles" -B debug -DTESTING=ON -DCMAKE_CXX_COMPILER=g++-12 -DCMAKE_BUILD_TYPE=Debug .
