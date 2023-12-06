@@ -43,11 +43,11 @@ session::~session() {
   boost::posix_time::time_duration diff = end - start;
 
   BOOST_LOG_SEV(lg, info) << "[session] Number[" + Number + "] CallID[" +
-                                 CallID + "] Status: Destructor";
+                                 CallID + "] Destructor";
   if (Status == "already in queue")
     return;
   BOOST_LOG_SEV(lg, info) << "[session] Number[" + Number + "] CallID[" +
-                                 CallID + "] Status: Write CDR";
+                                 CallID + "] Write CDR";
 
   if (Status == "overload" || Status == "timeout") {
     BOOST_LOG_SEV(lg, CDR) << DTIncoming + ';' + CallID + ';' + Number + ';' +
@@ -63,7 +63,7 @@ session::~session() {
 
 void session::set_Status(std::string status) {
   BOOST_LOG_SEV(lg, debug) << "[session] Number[" + Number + "] CallID[" +
-                                  CallID + "] Status: Set status: " + status;
+                                  CallID + "] Set status " + status;
   Status = status;
 }
 
@@ -111,14 +111,14 @@ void session::check_deadline() {
       if (strong->OperatorID == -1) {
         BOOST_LOG_SEV(strong->lg, warn)
             << "[session] Number[" + strong->Number + "] CallID[" +
-                   strong->CallID + "] Status: TIMEOUT";
+                   strong->CallID + "] Status timeout";
 
         strong->set_Status("timeout");
         strong->q_ptr->erase(strong);
       } else {
         BOOST_LOG_SEV(strong->lg, info) << "[session] Number[" +
                                                strong->Number + "] CallID[" +
-                                               strong->CallID + "] Status: OK";
+                                               strong->CallID + "] Status OK";
         strong->set_Status("OK");
       }
     }
@@ -137,7 +137,7 @@ void session::do_read() {
                                                std::size_t bytes_transferred) {
                      BOOST_LOG_SEV(self->lg, debug)
                          << "[session] Number[" + self->Number + "] CallID[" +
-                                self->CallID + "] Asyn read handler";
+                                self->CallID + "] Async read handler";
 
                      self->on_read(ec, bytes_transferred);
                    });
@@ -153,7 +153,7 @@ void session::on_read(beast::error_code ec, std::size_t bytes_transferred) {
     if (ec == http::error::end_of_stream)
       BOOST_LOG_SEV(lg, critical) << "[session] Number[" + Number +
                                          "] CallID[" + CallID +
-                                         "] Abonent closed connection";
+                                         "] Abonent close connection";
     timer.cancel();
     do_close();
     return;
@@ -163,7 +163,7 @@ void session::on_read(beast::error_code ec, std::size_t bytes_transferred) {
 
   if (q_ptr->found_Number(shared_from_this())) {
     BOOST_LOG_SEV(lg, warn) << "[session] Number[" + Number + "] CallID[" +
-                                   CallID + "] already in queue";
+                                   CallID + "] Already in queue";
     send("already in queue");
     set_Status("already in queue");
     return;
@@ -174,7 +174,7 @@ void session::on_read(beast::error_code ec, std::size_t bytes_transferred) {
     send("queue is full");
     set_Status("overload");
     BOOST_LOG_SEV(lg, warn) << "[session] Number[" + Number + "] CallID[" +
-                                   CallID + "] queue is full";
+                                   CallID + "] Queue is full";
     return;
   }
   std::string response("in queue\nCallID: ");
@@ -217,7 +217,7 @@ void session::send_response(std::string response) {
                                                 std::size_t bytes_transferred) {
                       BOOST_LOG_SEV(self->lg, debug)
                           << "[session] Number[" + self->Number + "] CallID[" +
-                                 self->CallID + "] Send response";
+                                 self->CallID + "] Write handler response";
 
                       self->on_write(ec, bytes_transferred);
                     });
@@ -239,7 +239,7 @@ void session::on_write(beast::error_code ec, std::size_t bytes_transferred) {
   if (ec) {
     return; // fail(ec, "write");
     BOOST_LOG_SEV(lg, error) << "[session] Number[" + Number + "] CallID[" +
-                                    CallID + "] session:: Write" + ec.message();
+                                    CallID + "] Write " + ec.message();
   }
 
   BOOST_LOG_SEV(lg, info) << "[session] Number[" + Number + "] CallID[" +
