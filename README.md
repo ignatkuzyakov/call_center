@@ -30,7 +30,7 @@ Operators use software that exchanges information with a central call handling s
 ## Prerequisite list ## 
 
 ```
-sudo apt-get libboost-dev g++-12
+sudo apt-get install libboost-all-dev g++-12 cmake
 ```
 ### [warn] Unfortunately you need install libboost-dev manualy at least 1.74 cause FetchContent may cause linking error 
 
