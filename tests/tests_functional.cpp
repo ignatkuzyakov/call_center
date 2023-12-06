@@ -25,6 +25,8 @@ TEST(oneAbonent, functionalTests) {
   bp::child c2(processName2, bp::std_out > is);
 
   c2.wait();
+  // Some time for server executing
+  std::this_thread::sleep_for(std::chrono::seconds(1));
   c1.terminate();
 
   std::getline(is, result);
@@ -61,5 +63,8 @@ TEST(multiuser, functionalTests) {
 
   for (auto &ch : childs)
     ch.join();
+
+  // Some time for server executing
+  std::this_thread::sleep_for(std::chrono::seconds(1));
   c1.terminate();
 }
