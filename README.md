@@ -32,7 +32,7 @@ Operators use software that exchanges information with a central call handling s
 ```
 sudo apt-get install libboost-all-dev g++-12 cmake
 ```
-### [warn] Unfortunately you need install libboost-dev manualy at least 1.74 cause FetchContent may cause linking error 
+### [warn] Unfortunately you need install libboost-all-dev manualy at least 1.74 version, cause FetchContent may cause linking error 
 
 ### (boost::log must be dynamically linked, however, BOOST_LOG_DYN_LINK does not solve the problem.)
 
